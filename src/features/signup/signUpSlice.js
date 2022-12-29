@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   user: [],
   message: "",
+  loggedIn:false
 };
 
 export const signUpSlice = createSlice({
@@ -30,10 +31,13 @@ export const signUpSlice = createSlice({
         localStorage.setItem("userSignup", JSON.stringify([action.payload]));
       }
     },
+    handleloggedIn:(state,action)=>{
+      state.loggedIn = action.payload;
+    }
   },
 });
 
-export const { handleSignUp } = signUpSlice.actions;
+export const { handleSignUp ,handleloggedIn} = signUpSlice.actions;
 
 
 export default signUpSlice.reducer;

@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { Box, Typography, TextField, Grid, Button } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate  } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { handleloggedIn } from "../features/signup/signUpSlice";
 export const Login = () => {
   const navigate= useNavigate()
+  const dispatch = useDispatch();
   const [values, setValues] = useState({ email: "", password: "" });
   const [message,setMessage] = useState()
   const handleChange = (e) => {
@@ -22,6 +25,7 @@ export const Login = () => {
           item.email === values.email && item.password === values.password
       );
       if(userExist){
+        dispatch(handleloggedIn(true))
         navigate("/homepage")
       }
       else {
