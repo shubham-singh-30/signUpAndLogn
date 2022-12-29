@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 import { Box, Typography, TextField, Grid, Button } from "@mui/material";
-import { Link, useNavigate  } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { handleloggedIn } from "../features/signup/signUpSlice";
-export const Login = () => {
-  const navigate= useNavigate()
-  const dispatch = useDispatch();
+import { Link } from "react-router-dom";
+export const Forgetpassword = () => {
   const [values, setValues] = useState({ email: "", password: "" });
-  const [message,setMessage] = useState()
+  const [message, setMessage] = useState();
   const handleChange = (e) => {
     let value = e.target.value;
     let target = e.target.id;
@@ -20,25 +16,26 @@ export const Login = () => {
     let user = localStorage.getItem("userSignup");
     if (user !== null) {
       const initialValue = JSON.parse(user);
-      let userExist = initialValue.find(
-        (item) =>
-          item.email === values.email && item.password === values.password
+
+      let userExist = initialValue.findIndex(
+        (item) => item.email === values.email
       );
-      if(userExist){
-        dispatch(handleloggedIn(true))
-        navigate("/homepage")
-      }
-      else {
-        setMessage("Invalid user")
+      let userData = initialValue.find((item) => item.email === values.email);
+      if (userData) {
+        let newPassword = { ...userData, password: values.password };
+        initialValue[userExist] = newPassword;
+        localStorage.setItem("userSignup", JSON.stringify(initialValue));
+        setMessage("Password updated successfully");
+      } else {
+        setMessage("Invalid user");
         setTimeout(() => {
-          setMessage("")
+          setMessage("");
         }, 4000);
       }
-    }
-    else {
-      setMessage("Invalid user")
+    } else {
+      setMessage("Invalid user");
       setTimeout(() => {
-        setMessage("")
+        setMessage("");
       }, 4000);
     }
   };
@@ -92,18 +89,18 @@ export const Login = () => {
             fullWidth
           />
           <Typography mb={4} variant="caption">
-            Password
+            New Password
           </Typography>
           <Typography>{message}</Typography>
           <Button mt={2} variant="contained" onClick={handleLogin}>
-            Login
+            Change Password
           </Button>
           <Grid mt={2} sx={{ display: "flex", gap: "60px" }}>
             <Typography variant="caption">
               Create account <Link to="/signup">Sign up</Link>
             </Typography>
             <Typography variant="caption">
-              <Link to="/forgetpassword">Forgot Password</Link>
+              <Link to="/login">Login</Link>
             </Typography>
           </Grid>
         </Grid>

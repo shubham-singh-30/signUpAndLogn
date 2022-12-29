@@ -1,5 +1,5 @@
 import React from "react";
-import { Login, SignUp, HomePage } from "./Components";
+import { Login, SignUp, HomePage,Forgetpassword } from "./Components";
 import { Route, Routes, Navigate } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import { useSelector } from "react-redux";
@@ -17,7 +17,7 @@ function App() {
             <HomePage/>
           </ProtectedRoute>
       } />
-        <Route path="/homepage" element={<HomePage />} />
+        <Route path="/forgetpassword" element= {<Forgetpassword/>} />
       </Routes>
     </div>
   );
